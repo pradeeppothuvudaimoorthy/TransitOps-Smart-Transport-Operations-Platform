@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This file is a placeholder for any expense-type reference data.
+    Expense types are defined as a Selection field in the model.
+    No separate database records are required.
+    The file is listed in manifest for clarity and future extension.
+-->
+<odoo>
+    <data/>
+</odoo>

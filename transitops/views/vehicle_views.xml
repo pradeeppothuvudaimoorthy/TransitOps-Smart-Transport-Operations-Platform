@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================
+             ACTION WINDOW
+        ============================================================ -->
+        <record id="action_transit_vehicle" model="ir.actions.act_window">
+            <field name="name">Fleet Vehicles</field>
+            <field name="res_model">transit.vehicle</field>
+            <field name="view_mode">list,form,kanban</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Register your first vehicle
+                </p>
+                <p>
+                    Add vehicles to your fleet by clicking the Create button.
+                </p>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             LIST VIEW
+        ============================================================ -->
+        <record id="view_transit_vehicle_list" model="ir.ui.view">
+            <field name="name">transit.vehicle.list</field>
+            <field name="model">transit.vehicle</field>
+            <field name="arch" type="xml">
+                <list string="Fleet Vehicles"
+                      decoration-success="status == 'available'"
+                      decoration-warning="status == 'in_shop'"
+                      decoration-danger="status == 'retired'"
+                      decoration-info="status == 'on_trip'">
+                    <field name="name"/>
+                    <field name="registration_number"/>
+                    <field name="vehicle_type"/>
+                    <field name="region"/>
+                    <field name="fuel_type"/>
+                    <field name="max_load_capacity" widget="float" string="Capacity (kg)"/>
+                    <field name="current_odometer" string="Odometer (km)"/>
+                    <field name="status" widget="badge"
+                           decoration-success="status == 'available'"
+                           decoration-warning="status == 'in_shop'"
+                           decoration-danger="status == 'retired'"
+                           decoration-info="status == 'on_trip'"/>
+                    <field name="total_revenue" string="Revenue" widget="monetary"
+                           options="{'currency_field': False}"/>
+                    <field name="roi" string="ROI" widget="percentage"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             FORM VIEW
+        ============================================================ -->
+        <record id="view_transit_vehicle_form" model="ir.ui.view">
+            <field name="name">transit.vehicle.form</field>
+            <field name="model">transit.vehicle</field>
+            <field name="arch" type="xml">
+                <form string="Vehicle">
+                    <!-- Status Bar -->
+                    <header>
+                        <field name="status" widget="statusbar"
+                               statusbar_visible="available,on_trip,in_shop,retired"/>
+                        <button name="action_retire_vehicle"
+                                string="Retire Vehicle"
+                                type="object"
+                                class="btn-danger"
+                                groups="transitops.group_transitops_fleet_manager"
+                                confirm="Are you sure you want to retire this vehicle? This action is significant."
+                                invisible="status == 'retired'"/>
+                    </header>
+
+                    <sheet>
+                        <!-- Smart / Stat Buttons -->
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_trips"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-road">
+                                <field name="trip_count" widget="statinfo" string="Trips"/>
+                            </button>
+                            <button name="action_view_maintenance"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-wrench">
+                                <field name="maintenance_count" widget="statinfo" string="Maintenance"/>
+                            </button>
+                            <button name="action_view_fuel_logs"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-tint">
+                                <field name="fuel_log_count" widget="statinfo" string="Fuel Logs"/>
+                            </button>
+                            <button name="action_view_expenses"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-money">
+                                <field name="expense_count" widget="statinfo" string="Expenses"/>
+                            </button>
+                        </div>
+
+                        <!-- Title Row -->
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Vehicle Name..." required="1"/>
+                            </h1>
+                            <h3>
+                                <field name="registration_number"
+                                       placeholder="Registration Number..."
+                                       required="1"/>
+                            </h3>
+                        </div>
+
+                        <group>
+                            <group string="Vehicle Details">
+                                <field name="vehicle_type"/>
+                                <field name="fuel_type"/>
+                                <field name="region"/>
+                                <field name="max_load_capacity"/>
+                            </group>
+                            <group string="Operational Data">
+                                <field name="current_odometer"/>
+                                <field name="acquisition_cost"/>
+                                <field name="status" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <!-- Analytics Section -->
+                        <group string="Financial Analytics" col="4">
+                            <field name="total_fuel_cost" readonly="1"/>
+                            <field name="total_maintenance_cost" readonly="1"/>
+                            <field name="total_operational_cost" readonly="1"/>
+                            <field name="total_revenue" readonly="1"/>
+                            <field name="roi" readonly="1" widget="percentage"/>
+                        </group>
+
+                        <!-- Related Records Tabs -->
+                        <notebook>
+                            <page string="Trips" name="trips">
+                                <field name="trip_ids" readonly="1">
+                                    <list>
+                                        <field name="trip_number"/>
+                                        <field name="driver_id"/>
+                                        <field name="source"/>
+                                        <field name="destination"/>
+                                        <field name="dispatch_date"/>
+                                        <field name="status" widget="badge"/>
+                                        <field name="revenue"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Maintenance" name="maintenance">
+                                <field name="maintenance_ids" readonly="1">
+                                    <list>
+                                        <field name="reference"/>
+                                        <field name="issue"/>
+                                        <field name="workshop"/>
+                                        <field name="cost"/>
+                                        <field name="start_date"/>
+                                        <field name="end_date"/>
+                                        <field name="status" widget="badge"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Fuel Logs" name="fuel_logs">
+                                <field name="fuel_log_ids" readonly="1">
+                                    <list>
+                                        <field name="reference"/>
+                                        <field name="date"/>
+                                        <field name="fuel_liters"/>
+                                        <field name="fuel_cost"/>
+                                        <field name="distance"/>
+                                        <field name="fuel_efficiency"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Expenses" name="expenses">
+                                <field name="expense_ids" readonly="1">
+                                    <list>
+                                        <field name="reference"/>
+                                        <field name="expense_type" widget="badge"/>
+                                        <field name="amount"/>
+                                        <field name="date"/>
+                                        <field name="description"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+
+                    <!-- Chatter -->
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             KANBAN VIEW
+        ============================================================ -->
+        <record id="view_transit_vehicle_kanban" model="ir.ui.view">
+            <field name="name">transit.vehicle.kanban</field>
+            <field name="model">transit.vehicle</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" default_group_by="status">
+                    <field name="name"/>
+                    <field name="registration_number"/>
+                    <field name="vehicle_type"/>
+                    <field name="status"/>
+                    <field name="max_load_capacity"/>
+                    <field name="total_revenue"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                    <div class="o_kanban_tags_section">
+                                        <span class="badge rounded-pill">
+                                            <field name="registration_number"/>
+                                        </span>
+                                    </div>
+                                    <ul class="list-unstyled mb-0 mt-2">
+                                        <li>
+                                            <span class="text-muted">Type: </span>
+                                            <field name="vehicle_type"/>
+                                        </li>
+                                        <li>
+                                            <span class="text-muted">Capacity: </span>
+                                            <field name="max_load_capacity"/> kg
+                                        </li>
+                                        <li>
+                                            <span class="text-muted">Revenue: </span>
+                                            <field name="total_revenue"/>
+                                        </li>
+                                    </ul>
+                                    <div class="mt-2">
+                                        <field name="status" widget="badge"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             SEARCH VIEW
+        ============================================================ -->
+        <record id="view_transit_vehicle_search" model="ir.ui.view">
+            <field name="name">transit.vehicle.search</field>
+            <field name="model">transit.vehicle</field>
+            <field name="arch" type="xml">
+                <search string="Search Vehicles">
+                    <field name="name" string="Name / Plate"
+                           filter_domain="['|', ('name', 'ilike', self), ('registration_number', 'ilike', self)]"/>
+                    <field name="registration_number"/>
+                    <field name="region"/>
+                    <field name="vehicle_type"/>
+
+                    <!-- Quick Filters -->
+                    <filter string="Available" name="filter_available"
+                            domain="[('status', '=', 'available')]"/>
+                    <filter string="On Trip" name="filter_on_trip"
+                            domain="[('status', '=', 'on_trip')]"/>
+                    <filter string="In Shop" name="filter_in_shop"
+                            domain="[('status', '=', 'in_shop')]"/>
+                    <filter string="Retired" name="filter_retired"
+                            domain="[('status', '=', 'retired')]"/>
+                    <separator/>
+                    <filter string="Diesel" name="filter_diesel"
+                            domain="[('fuel_type', '=', 'diesel')]"/>
+                    <filter string="Electric" name="filter_electric"
+                            domain="[('fuel_type', '=', 'electric')]"/>
+
+                    <!-- Group By -->
+                    <group expand="0" string="Group By">
+                        <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
+                        <filter string="Vehicle Type" name="group_type" context="{'group_by': 'vehicle_type'}"/>
+                        <filter string="Region" name="group_region" context="{'group_by': 'region'}"/>
+                        <filter string="Fuel Type" name="group_fuel" context="{'group_by': 'fuel_type'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

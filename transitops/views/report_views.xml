@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================
+             REPORT / ANALYTICS ACTION
+        ============================================================ -->
+        <record id="action_transitops_reports" model="ir.actions.act_window">
+            <field name="name">Fleet Analytics</field>
+            <field name="res_model">transit.vehicle</field>
+            <field name="view_mode">list</field>
+            <field name="context">{}</field>
+        </record>
+
+        <!-- Vehicle ROI Report: list view with analytics columns -->
+        <record id="view_transitops_vehicle_analytics_list" model="ir.ui.view">
+            <field name="name">transit.vehicle.analytics.list</field>
+            <field name="model">transit.vehicle</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <list string="Fleet Analytics Report"
+                      create="false" delete="false" editable="false">
+                    <field name="name"/>
+                    <field name="registration_number"/>
+                    <field name="vehicle_type"/>
+                    <field name="acquisition_cost" sum="Total Acquisition"/>
+                    <field name="total_fuel_cost" sum="Total Fuel"/>
+                    <field name="total_maintenance_cost" sum="Total Maintenance"/>
+                    <field name="total_operational_cost" sum="Total OpEx"/>
+                    <field name="total_revenue" sum="Total Revenue"/>
+                    <field name="roi" widget="percentage" avg="Avg ROI"/>
+                    <field name="current_odometer" string="Odometer"/>
+                    <field name="status" widget="badge"/>
+                </list>
+            </field>
+        </record>
+
+    </data>
+</odoo>

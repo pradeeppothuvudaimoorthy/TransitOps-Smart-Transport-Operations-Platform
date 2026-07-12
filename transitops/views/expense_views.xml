@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================
+             ACTION WINDOW
+        ============================================================ -->
+        <record id="action_transit_expense" model="ir.actions.act_window">
+            <field name="name">Expenses</field>
+            <field name="res_model">transit.expense</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No expense records yet
+                </p>
+                <p>
+                    Fuel and maintenance expenses are auto-created.
+                    Add toll, insurance, repair or other expenses manually.
+                </p>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             LIST VIEW
+        ============================================================ -->
+        <record id="view_transit_expense_list" model="ir.ui.view">
+            <field name="name">transit.expense.list</field>
+            <field name="model">transit.expense</field>
+            <field name="arch" type="xml">
+                <list string="Expenses">
+                    <field name="reference"/>
+                    <field name="vehicle_id"/>
+                    <field name="trip_id" optional="show"/>
+                    <field name="expense_type" widget="badge"
+                           decoration-danger="expense_type == 'fuel'"
+                           decoration-warning="expense_type == 'maintenance'"
+                           decoration-info="expense_type == 'toll'"
+                           decoration-primary="expense_type == 'insurance'"/>
+                    <field name="amount" sum="Total Amount"/>
+                    <field name="date"/>
+                    <field name="description" optional="hide"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             FORM VIEW
+        ============================================================ -->
+        <record id="view_transit_expense_form" model="ir.ui.view">
+            <field name="name">transit.expense.form</field>
+            <field name="model">transit.expense</field>
+            <field name="arch" type="xml">
+                <form string="Expense">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="reference" readonly="1"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group string="Expense Details">
+                                <field name="vehicle_id"/>
+                                <field name="trip_id"
+                                       domain="[('vehicle_id', '=', vehicle_id)]"/>
+                                <field name="expense_type"/>
+                                <field name="amount"/>
+                                <field name="date"/>
+                            </group>
+                            <group string="Notes">
+                                <field name="description" nolabel="1" colspan="2"/>
+                            </group>
+                        </group>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             SEARCH VIEW
+        ============================================================ -->
+        <record id="view_transit_expense_search" model="ir.ui.view">
+            <field name="name">transit.expense.search</field>
+            <field name="model">transit.expense</field>
+            <field name="arch" type="xml">
+                <search string="Search Expenses">
+                    <field name="reference"/>
+                    <field name="vehicle_id"/>
+                    <field name="trip_id"/>
+
+                    <filter string="Fuel" name="filter_fuel"
+                            domain="[('expense_type', '=', 'fuel')]"/>
+                    <filter string="Maintenance" name="filter_maintenance"
+                            domain="[('expense_type', '=', 'maintenance')]"/>
+                    <filter string="Toll" name="filter_toll"
+                            domain="[('expense_type', '=', 'toll')]"/>
+                    <filter string="Insurance" name="filter_insurance"
+                            domain="[('expense_type', '=', 'insurance')]"/>
+                    <separator/>
+                    <filter string="This Month" name="filter_month"
+                            domain="[('date', '&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Type" name="group_type" context="{'group_by': 'expense_type'}"/>
+                        <filter string="Vehicle" name="group_vehicle" context="{'group_by': 'vehicle_id'}"/>
+                        <filter string="Trip" name="group_trip" context="{'group_by': 'trip_id'}"/>
+                        <filter string="Month" name="group_month" context="{'group_by': 'date:month'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

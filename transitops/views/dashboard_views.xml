@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================
+             DASHBOARD ACTION
+        ============================================================ -->
+        <record id="action_transitops_dashboard" model="ir.actions.act_window">
+            <field name="name">Dashboard</field>
+            <field name="res_model">transit.dashboard</field>
+            <field name="view_mode">form</field>
+            <field name="target">main</field>
+        </record>
+
+        <!-- ============================================================
+             DASHBOARD FORM VIEW — Professional Enterprise Design v3.0
+        ============================================================ -->
+        <record id="view_transitops_dashboard_form" model="ir.ui.view">
+            <field name="name">transit.dashboard.form</field>
+            <field name="model">transit.dashboard</field>
+            <field name="arch" type="xml">
+                <form string="TransitOps Dashboard" create="false" edit="false" delete="false">
+                    <sheet>
+                        <div class="transitops-dashboard">
+
+                            <!-- ==========================================
+                                 HEADER BAR
+                            ========================================== -->
+                            <div class="transitops-dashboard-header">
+                                <div class="to-header-left">
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <h1 class="to-text-heading" style="font-family:'Poppins',sans-serif;font-size:1.1rem;font-weight:700;margin:0;">
+                                            TransitOps
+                                        </h1>
+                                        <span class="to-status-pill">
+                                            <span class="to-status-dot"/>
+                                            Operational
+                                        </span>
+                                    </div>
+                                    <p style="font-family:'Poppins',sans-serif;font-size:0.78rem;font-weight:400;color:#64748B;margin:0;">
+                                        Fleet Operations Dashboard — Real-time data
+                                    </p>
+                                </div>
+                                <div class="to-header-actions">
+                                    <button name="%(action_transit_trip)d"
+                                            type="action"
+                                            class="to-btn-header to-btn-primary">
+                                        + New Trip
+                                    </button>
+                                    <button name="%(action_transit_vehicle)d"
+                                            type="action"
+                                            class="to-btn-header">
+                                        Fleet
+                                    </button>
+                                    <button name="%(action_transitops_reports)d"
+                                            type="action"
+                                            class="to-btn-header">
+                                        Analytics
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- ==========================================
+                                 SECTION 1: FLEET STATUS
+                            ========================================== -->
+                            <div class="to-section-header">
+                                <span class="to-section-title">Fleet Status</span>
+                            </div>
+                            <div class="row g-3 mb-4">
+
+                                <!-- Active Vehicles -->
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="transitops-kpi-card kpi-primary">
+                                        <div class="to-card-top">
+                                            <div class="kpi-title">Active Vehicles</div>
+                                            <div class="kpi-icon-wrap">🚛</div>
+                                        </div>
+                                        <div class="kpi-value" id="kpi-active-vehicles">—</div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="kpi-trend neutral">Total registered</span>
+                                            <button name="%(action_transit_vehicle)d"
+                                                    type="action"
+                                                    class="kpi-action-link">
+                                                View all →
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Available Vehicles -->
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="transitops-kpi-card kpi-success">
+                                        <div class="to-card-top">
+                                            <div class="kpi-title">Available Vehicles</div>
+                                            <div class="kpi-icon-wrap">✓</div>
+                                        </div>
+                                        <div class="kpi-value" id="kpi-available-vehicles">—</div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="kpi-trend up">Ready to dispatch</span>
+                                            <button name="%(action_transit_vehicle)d"
+                                                    type="action"
+                                                    class="kpi-action-link"
+                                                    context="{'search_default_filter_available': 1}">
+                                                View →
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- In Maintenance -->
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="transitops-kpi-card kpi-warning">
+                                        <div class="to-card-top">
+                                            <div class="kpi-title">In Maintenance</div>
+                                            <div class="kpi-icon-wrap">⚙</div>
+                                        </div>
+                                        <div class="kpi-value" id="kpi-in-maintenance">—</div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="kpi-trend warn">Requires attention</span>
+                                            <button name="%(action_transit_maintenance)d"
+                                                    type="action"
+                                                    class="kpi-action-link">
+                                                View →
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Available Drivers -->
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="transitops-kpi-card kpi-info">
+                                        <div class="to-card-top">
+                                            <div class="kpi-title">Available Drivers</div>
+                                            <div class="kpi-icon-wrap">👤</div>
+                                        </div>
+                                        <div class="kpi-value" id="kpi-available-drivers">—</div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="kpi-trend up">On standby</span>
+                                            <button name="%(action_transit_driver)d"
+                                                    type="action"
+                                                    class="kpi-action-link"
+                                                    context="{'search_default_filter_available': 1}">
+                                                View →
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- ==========================================
+                                 SECTION 2: TRIP OPERATIONS
+                            ========================================== -->
+                            <div class="to-section-header">
+                                <span class="to-section-title">Trip Operations</span>
+                            </div>
+                            <div class="row g-3 mb-4">
+
+                                <!-- Trips Today -->
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="transitops-kpi-card kpi-dark">
+                                        <div class="to-card-top">
+                                            <div class="kpi-title">Trips Today</div>
+                                            <div class="kpi-icon-wrap">📅</div>
+                                        </div>
+                                        <div class="kpi-value" id="kpi-trips-today">—</div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="kpi-trend neutral">Dispatched today</span>
+                                            <button name="%(action_transit_trip)d"
+                                                    type="action"
+                                                    class="kpi-action-link"
+                                                    context="{'search_default_filter_today': 1}">
+                                                View →
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Active Trips -->
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="transitops-kpi-card kpi-orange">
+                                        <div class="to-card-top">
+                                            <div class="kpi-title">Active Trips</div>
+                                            <div class="kpi-icon-wrap">↻</div>
+                                        </div>
+                                        <div class="kpi-value" id="kpi-active-trips">—</div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="kpi-trend warn">In progress</span>
+                                            <button name="%(action_transit_trip_active)d"
+                                                    type="action"
+                                                    class="kpi-action-link">
+                                                Monitor →
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pending Dispatch -->
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="transitops-kpi-card kpi-secondary">
+                                        <div class="to-card-top">
+                                            <div class="kpi-title">Pending Dispatch</div>
+                                            <div class="kpi-icon-wrap">≡</div>
+                                        </div>
+                                        <div class="kpi-value" id="kpi-pending-trips">—</div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="kpi-trend neutral">Awaiting dispatch</span>
+                                            <button name="%(action_transit_trip)d"
+                                                    type="action"
+                                                    class="kpi-action-link"
+                                                    context="{'search_default_filter_draft': 1}">
+                                                View →
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- ==========================================
+                                 SECTION 3: FINANCIAL OVERVIEW
+                            ========================================== -->
+                            <div class="to-section-header">
+                                <span class="to-section-title">Financial Overview</span>
+                            </div>
+                            <div class="row g-3 mb-4">
+
+                                <!-- Fuel Cost -->
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="transitops-kpi-card kpi-teal">
+                                        <div class="to-card-top">
+                                            <div class="kpi-title">Total Fuel Cost</div>
+                                            <div class="kpi-icon-wrap">⛽</div>
+                                        </div>
+                                        <div class="kpi-value" id="kpi-fuel-cost" style="font-size:1.5rem;">—</div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="kpi-trend down">Operational expense</span>
+                                            <button name="%(action_transit_fuel_log)d"
+                                                    type="action"
+                                                    class="kpi-action-link">
+                                                Logs →
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Maintenance Cost -->
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="transitops-kpi-card kpi-red">
+                                        <div class="to-card-top">
+                                            <div class="kpi-title">Maintenance Cost</div>
+                                            <div class="kpi-icon-wrap">🔩</div>
+                                        </div>
+                                        <div class="kpi-value" id="kpi-maintenance-cost" style="font-size:1.5rem;">—</div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="kpi-trend down">This period</span>
+                                            <button name="%(action_transit_maintenance)d"
+                                                    type="action"
+                                                    class="kpi-action-link">
+                                                View →
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Total Revenue -->
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="transitops-kpi-card kpi-green">
+                                        <div class="to-card-top">
+                                            <div class="kpi-title">Total Revenue</div>
+                                            <div class="kpi-icon-wrap">₹</div>
+                                        </div>
+                                        <div class="kpi-value" id="kpi-revenue" style="font-size:1.5rem;">—</div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="kpi-trend up">From completed trips</span>
+                                            <button name="%(action_transit_trip)d"
+                                                    type="action"
+                                                    class="kpi-action-link"
+                                                    context="{'search_default_filter_completed': 1}">
+                                                View →
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Fleet Health -->
+                                <div class="col-xl-3 col-md-6">
+                                    <div class="transitops-kpi-card kpi-purple">
+                                        <div class="to-card-top">
+                                            <div class="kpi-title">Fleet Health Score</div>
+                                            <div class="kpi-icon-wrap">◎</div>
+                                        </div>
+                                        <div class="kpi-value" id="kpi-health-score">—</div>
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <span class="kpi-trend up">Overall performance</span>
+                                            <button name="%(action_transit_vehicle)d"
+                                                    type="action"
+                                                    class="kpi-action-link">
+                                                Details →
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- ==========================================
+                                 QUICK ACTIONS
+                            ========================================== -->
+                            <div class="transitops-quick-links">
+                                <h5>Quick Actions</h5>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button name="%(action_transit_vehicle)d"
+                                            type="action"
+                                            class="btn btn-outline-primary btn-sm">
+                                        + Register Vehicle
+                                    </button>
+                                    <button name="%(action_transit_driver)d"
+                                            type="action"
+                                            class="btn btn-outline-success btn-sm">
+                                        + Register Driver
+                                    </button>
+                                    <button name="%(action_transit_trip)d"
+                                            type="action"
+                                            class="btn btn-outline-warning btn-sm">
+                                        + Create Trip
+                                    </button>
+                                    <button name="%(action_transit_maintenance)d"
+                                            type="action"
+                                            class="btn btn-outline-danger btn-sm">
+                                        Log Maintenance
+                                    </button>
+                                    <button name="%(action_transit_fuel_log)d"
+                                            type="action"
+                                            class="btn btn-outline-secondary btn-sm">
+                                        Log Fuel
+                                    </button>
+                                    <button name="%(action_transit_expense)d"
+                                            type="action"
+                                            class="btn btn-outline-secondary btn-sm">
+                                        Add Expense
+                                    </button>
+                                    <button name="%(action_transitops_reports)d"
+                                            type="action"
+                                            class="btn btn-outline-secondary btn-sm">
+                                        Analytics Report
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================
+             ACTION WINDOW
+        ============================================================ -->
+        <record id="action_transit_maintenance" model="ir.actions.act_window">
+            <field name="name">Maintenance</field>
+            <field name="res_model">transit.maintenance</field>
+            <field name="view_mode">list,form,kanban</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No maintenance records yet
+                </p>
+                <p>
+                    Record maintenance events to track vehicle downtime and costs.
+                </p>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             LIST VIEW
+        ============================================================ -->
+        <record id="view_transit_maintenance_list" model="ir.ui.view">
+            <field name="name">transit.maintenance.list</field>
+            <field name="model">transit.maintenance</field>
+            <field name="arch" type="xml">
+                <list string="Maintenance"
+                      decoration-warning="status == 'active'"
+                      decoration-success="status == 'closed'">
+                    <field name="reference"/>
+                    <field name="vehicle_id"/>
+                    <field name="issue"/>
+                    <field name="workshop"/>
+                    <field name="cost"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="status" widget="badge"
+                           decoration-warning="status == 'active'"
+                           decoration-success="status == 'closed'"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             FORM VIEW
+        ============================================================ -->
+        <record id="view_transit_maintenance_form" model="ir.ui.view">
+            <field name="name">transit.maintenance.form</field>
+            <field name="model">transit.maintenance</field>
+            <field name="arch" type="xml">
+                <form string="Maintenance Record">
+                    <header>
+                        <field name="status" widget="statusbar"
+                               statusbar_visible="active,closed"/>
+                        <button name="action_close_maintenance"
+                                string="✅ Close Maintenance"
+                                type="object"
+                                class="btn-success"
+                                invisible="status != 'active'"
+                                groups="transitops.group_transitops_fleet_manager"
+                                confirm="Mark this maintenance record as closed and restore vehicle availability?"/>
+                    </header>
+
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="reference" readonly="1"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group string="Vehicle &amp; Issue">
+                                <field name="vehicle_id" readonly="status == 'closed'"/>
+                                <field name="issue" readonly="status == 'closed'"/>
+                                <field name="workshop" readonly="status == 'closed'"/>
+                            </group>
+                            <group string="Cost &amp; Timeline">
+                                <field name="cost"/>
+                                <field name="start_date" readonly="status == 'closed'"/>
+                                <field name="end_date" readonly="status == 'closed'"/>
+                                <field name="status" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group string="Linked Expense" col="2">
+                            <field name="expense_id" readonly="1"
+                                   invisible="not expense_id"/>
+                        </group>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             KANBAN VIEW
+        ============================================================ -->
+        <record id="view_transit_maintenance_kanban" model="ir.ui.view">
+            <field name="name">transit.maintenance.kanban</field>
+            <field name="model">transit.maintenance</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="status">
+                    <field name="reference"/>
+                    <field name="vehicle_id"/>
+                    <field name="issue"/>
+                    <field name="cost"/>
+                    <field name="start_date"/>
+                    <field name="status"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <strong><field name="reference"/></strong>
+                                    <ul class="list-unstyled mb-0 mt-1">
+                                        <li><b>Vehicle:</b> <field name="vehicle_id"/></li>
+                                        <li><b>Issue:</b> <field name="issue"/></li>
+                                        <li><b>Cost:</b> <field name="cost"/></li>
+                                        <li><b>Started:</b> <field name="start_date"/></li>
+                                    </ul>
+                                    <div class="mt-2">
+                                        <field name="status" widget="badge"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             SEARCH VIEW
+        ============================================================ -->
+        <record id="view_transit_maintenance_search" model="ir.ui.view">
+            <field name="name">transit.maintenance.search</field>
+            <field name="model">transit.maintenance</field>
+            <field name="arch" type="xml">
+                <search string="Search Maintenance">
+                    <field name="reference"/>
+                    <field name="vehicle_id"/>
+                    <field name="workshop"/>
+                    <field name="issue"/>
+
+                    <filter string="Active" name="filter_active"
+                            domain="[('status', '=', 'active')]"/>
+                    <filter string="Closed" name="filter_closed"
+                            domain="[('status', '=', 'closed')]"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
+                        <filter string="Vehicle" name="group_vehicle" context="{'group_by': 'vehicle_id'}"/>
+                        <filter string="Workshop" name="group_workshop" context="{'group_by': 'workshop'}"/>
+                        <filter string="Start Month" name="group_month" context="{'group_by': 'start_date:month'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

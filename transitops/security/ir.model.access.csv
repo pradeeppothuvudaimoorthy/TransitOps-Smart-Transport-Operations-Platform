@@ -1,0 +1,55 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+# ============================================================
+# transit.vehicle
+# ============================================================
+access_transit_vehicle_manager,transit.vehicle fleet manager,model_transit_vehicle,transitops.group_transitops_fleet_manager,1,1,1,1
+access_transit_vehicle_dispatcher,transit.vehicle dispatcher,model_transit_vehicle,transitops.group_transitops_dispatcher,1,0,0,0
+access_transit_vehicle_safety,transit.vehicle safety officer,model_transit_vehicle,transitops.group_transitops_safety_officer,1,0,0,0
+access_transit_vehicle_financial,transit.vehicle financial analyst,model_transit_vehicle,transitops.group_transitops_financial_analyst,1,0,0,0
+# ============================================================
+# transit.driver
+# ============================================================
+access_transit_driver_manager,transit.driver fleet manager,model_transit_driver,transitops.group_transitops_fleet_manager,1,1,1,1
+access_transit_driver_dispatcher,transit.driver dispatcher,model_transit_driver,transitops.group_transitops_dispatcher,1,0,0,0
+access_transit_driver_safety,transit.driver safety officer,model_transit_driver,transitops.group_transitops_safety_officer,1,0,0,0
+access_transit_driver_financial,transit.driver financial analyst,model_transit_driver,transitops.group_transitops_financial_analyst,1,0,0,0
+# ============================================================
+# transit.trip
+# ============================================================
+access_transit_trip_manager,transit.trip fleet manager,model_transit_trip,transitops.group_transitops_fleet_manager,1,1,1,1
+access_transit_trip_dispatcher,transit.trip dispatcher,model_transit_trip,transitops.group_transitops_dispatcher,1,1,1,0
+access_transit_trip_safety,transit.trip safety officer,model_transit_trip,transitops.group_transitops_safety_officer,1,0,0,0
+access_transit_trip_financial,transit.trip financial analyst,model_transit_trip,transitops.group_transitops_financial_analyst,1,0,0,0
+# ============================================================
+# transit.maintenance
+# ============================================================
+access_transit_maintenance_manager,transit.maintenance fleet manager,model_transit_maintenance,transitops.group_transitops_fleet_manager,1,1,1,1
+access_transit_maintenance_dispatcher,transit.maintenance dispatcher,model_transit_maintenance,transitops.group_transitops_dispatcher,1,0,0,0
+access_transit_maintenance_safety,transit.maintenance safety officer,model_transit_maintenance,transitops.group_transitops_safety_officer,1,0,0,0
+access_transit_maintenance_financial,transit.maintenance financial analyst,model_transit_maintenance,transitops.group_transitops_financial_analyst,1,0,0,0
+# ============================================================
+# transit.fuel.log
+# ============================================================
+access_transit_fuel_log_manager,transit.fuel.log fleet manager,model_transit_fuel_log,transitops.group_transitops_fleet_manager,1,1,1,1
+access_transit_fuel_log_dispatcher,transit.fuel.log dispatcher,model_transit_fuel_log,transitops.group_transitops_dispatcher,1,1,1,0
+access_transit_fuel_log_safety,transit.fuel.log safety officer,model_transit_fuel_log,transitops.group_transitops_safety_officer,1,0,0,0
+access_transit_fuel_log_financial,transit.fuel.log financial analyst,model_transit_fuel_log,transitops.group_transitops_financial_analyst,1,1,1,0
+# ============================================================
+# transit.expense
+# ============================================================
+access_transit_expense_manager,transit.expense fleet manager,model_transit_expense,transitops.group_transitops_fleet_manager,1,1,1,1
+access_transit_expense_dispatcher,transit.expense dispatcher,model_transit_expense,transitops.group_transitops_dispatcher,1,0,0,0
+access_transit_expense_safety,transit.expense safety officer,model_transit_expense,transitops.group_transitops_safety_officer,1,0,0,0
+access_transit_expense_financial,transit.expense financial analyst,model_transit_expense,transitops.group_transitops_financial_analyst,1,1,1,0
+# ============================================================
+# transit.dashboard (read-only for all roles)
+# ============================================================
+access_transit_dashboard_manager,transit.dashboard fleet manager,model_transit_dashboard,transitops.group_transitops_fleet_manager,1,1,1,1
+access_transit_dashboard_dispatcher,transit.dashboard dispatcher,model_transit_dashboard,transitops.group_transitops_dispatcher,1,0,0,0
+access_transit_dashboard_safety,transit.dashboard safety officer,model_transit_dashboard,transitops.group_transitops_safety_officer,1,0,0,0
+access_transit_dashboard_financial,transit.dashboard financial analyst,model_transit_dashboard,transitops.group_transitops_financial_analyst,1,0,0,0
+# ============================================================
+# transit.trip.cancel.wizard
+# ============================================================
+access_transit_trip_cancel_wizard_manager,transit.trip.cancel.wizard manager,model_transit_trip_cancel_wizard,transitops.group_transitops_fleet_manager,1,1,1,1
+access_transit_trip_cancel_wizard_dispatcher,transit.trip.cancel.wizard dispatcher,model_transit_trip_cancel_wizard,transitops.group_transitops_dispatcher,1,1,1,1

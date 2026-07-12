@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ============================================================
+             TOP-LEVEL MENU
+        ============================================================ -->
+        <menuitem id="menu_transitops_root"
+                  name="TransitOps"
+                  web_icon="transitops,static/description/icon.png"
+                  sequence="100"/>
+
+        <!-- ============================================================
+             DASHBOARD
+        ============================================================ -->
+        <menuitem id="menu_transitops_dashboard"
+                  name="Dashboard"
+                  parent="menu_transitops_root"
+                  action="action_transitops_dashboard"
+                  sequence="1"/>
+
+        <!-- ============================================================
+             FLEET MANAGEMENT
+        ============================================================ -->
+        <menuitem id="menu_transitops_fleet"
+                  name="Fleet Management"
+                  parent="menu_transitops_root"
+                  sequence="10"/>
+
+        <menuitem id="menu_transitops_vehicles"
+                  name="Vehicles"
+                  parent="menu_transitops_fleet"
+                  action="action_transit_vehicle"
+                  sequence="11"
+                  groups="transitops.group_transitops_user"/>
+
+        <menuitem id="menu_transitops_drivers"
+                  name="Drivers"
+                  parent="menu_transitops_fleet"
+                  action="action_transit_driver"
+                  sequence="12"
+                  groups="transitops.group_transitops_user"/>
+
+        <!-- ============================================================
+             OPERATIONS
+        ============================================================ -->
+        <menuitem id="menu_transitops_operations"
+                  name="Operations"
+                  parent="menu_transitops_root"
+                  sequence="20"/>
+
+        <menuitem id="menu_transitops_trips"
+                  name="All Trips"
+                  parent="menu_transitops_operations"
+                  action="action_transit_trip"
+                  sequence="21"
+                  groups="transitops.group_transitops_user"/>
+
+        <menuitem id="menu_transitops_trips_active"
+                  name="Active Trips"
+                  parent="menu_transitops_operations"
+                  action="action_transit_trip_active"
+                  sequence="22"
+                  groups="transitops.group_transitops_dispatcher,transitops.group_transitops_fleet_manager"/>
+
+        <!-- ============================================================
+             MAINTENANCE
+        ============================================================ -->
+        <menuitem id="menu_transitops_maintenance"
+                  name="Maintenance"
+                  parent="menu_transitops_root"
+                  sequence="30"/>
+
+        <menuitem id="menu_transitops_maintenance_records"
+                  name="Maintenance Records"
+                  parent="menu_transitops_maintenance"
+                  action="action_transit_maintenance"
+                  sequence="31"
+                  groups="transitops.group_transitops_user"/>
+
+        <!-- ============================================================
+             FINANCIALS
+        ============================================================ -->
+        <menuitem id="menu_transitops_financials"
+                  name="Financials"
+                  parent="menu_transitops_root"
+                  sequence="40"/>
+
+        <menuitem id="menu_transitops_fuel_logs"
+                  name="Fuel Logs"
+                  parent="menu_transitops_financials"
+                  action="action_transit_fuel_log"
+                  sequence="41"
+                  groups="transitops.group_transitops_financial_analyst,transitops.group_transitops_fleet_manager"/>
+
+        <menuitem id="menu_transitops_expenses"
+                  name="Expenses"
+                  parent="menu_transitops_financials"
+                  action="action_transit_expense"
+                  sequence="42"
+                  groups="transitops.group_transitops_financial_analyst,transitops.group_transitops_fleet_manager"/>
+
+        <!-- ============================================================
+             ANALYTICS
+        ============================================================ -->
+        <menuitem id="menu_transitops_analytics"
+                  name="Analytics"
+                  parent="menu_transitops_root"
+                  sequence="50"/>
+
+        <menuitem id="menu_transitops_fleet_analytics"
+                  name="Fleet Analytics"
+                  parent="menu_transitops_analytics"
+                  action="action_transitops_reports"
+                  sequence="51"
+                  groups="transitops.group_transitops_financial_analyst,transitops.group_transitops_fleet_manager"/>
+
+    </data>
+</odoo>

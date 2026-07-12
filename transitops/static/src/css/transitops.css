@@ -1,0 +1,1037 @@
+/* ============================================================
+   TransitOps — Smart Transport Operations Platform
+   Professional Enterprise Design System v3.0
+   Inspired by: Stripe · Linear · Vercel · SAP Fiori
+   Font: Poppins (Google Fonts)
+   ============================================================ */
+
+/* ============================================================
+   1. GOOGLE FONTS — POPPINS
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/* ============================================================
+   2. DESIGN TOKENS
+   ============================================================ */
+:root {
+    /* Typography */
+    --to-font:          'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Brand */
+    --to-brand:         #2563EB;
+    --to-brand-light:   #EFF6FF;
+    --to-brand-mid:     #DBEAFE;
+    --to-brand-dark:    #1D4ED8;
+
+    /* Neutrals */
+    --to-gray-950:  #0F172A;
+    --to-gray-800:  #1E293B;
+    --to-gray-700:  #334155;
+    --to-gray-600:  #475569;
+    --to-gray-500:  #64748B;
+    --to-gray-400:  #94A3B8;
+    --to-gray-300:  #CBD5E1;
+    --to-gray-200:  #E2E8F0;
+    --to-gray-100:  #F1F5F9;
+    --to-gray-50:   #F8FAFC;
+
+    /* Surfaces */
+    --to-bg:        #F8FAFC;
+    --to-surface:   #FFFFFF;
+    --to-border:    #E2E8F0;
+    --to-border-focus: #2563EB;
+
+    /* Semantic Colors */
+    --to-success:       #16A34A;
+    --to-success-bg:    #F0FDF4;
+    --to-success-border:#BBF7D0;
+    --to-success-text:  #15803D;
+
+    --to-warning:       #D97706;
+    --to-warning-bg:    #FFFBEB;
+    --to-warning-border:#FDE68A;
+    --to-warning-text:  #B45309;
+
+    --to-danger:        #DC2626;
+    --to-danger-bg:     #FEF2F2;
+    --to-danger-border: #FECACA;
+    --to-danger-text:   #B91C1C;
+
+    --to-info:          #0284C7;
+    --to-info-bg:       #F0F9FF;
+    --to-info-border:   #BAE6FD;
+    --to-info-text:     #0369A1;
+
+    --to-purple:        #7C3AED;
+    --to-purple-bg:     #F5F3FF;
+    --to-purple-border: #DDD6FE;
+    --to-purple-text:   #6D28D9;
+
+    --to-teal:          #0D9488;
+    --to-teal-bg:       #F0FDFA;
+    --to-teal-border:   #99F6E4;
+    --to-teal-text:     #0F766E;
+
+    --to-amber:         #D97706;
+    --to-amber-bg:      #FFFBEB;
+    --to-amber-border:  #FDE68A;
+
+    --to-slate:         #475569;
+    --to-slate-bg:      #F8FAFC;
+    --to-slate-border:  #CBD5E1;
+
+    /* Sizing */
+    --to-radius-xs:  4px;
+    --to-radius-sm:  6px;
+    --to-radius-md:  10px;
+    --to-radius-lg:  14px;
+    --to-radius-xl:  18px;
+    --to-radius-pill:100px;
+
+    /* Elevation */
+    --to-shadow-xs:  0 1px 2px rgba(0,0,0,0.05);
+    --to-shadow-sm:  0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.04);
+    --to-shadow-md:  0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04);
+    --to-shadow-lg:  0 10px 15px rgba(0,0,0,0.07), 0 4px 6px rgba(0,0,0,0.04);
+    --to-shadow-hover: 0 12px 24px rgba(0,0,0,0.09), 0 4px 8px rgba(0,0,0,0.05);
+
+    /* Motion */
+    --to-ease:       cubic-bezier(0.4, 0, 0.2, 1);
+    --to-duration:   200ms;
+    --to-transition: all var(--to-duration) var(--to-ease);
+}
+
+/* ============================================================
+   3. GLOBAL FONT APPLICATION
+   ============================================================ */
+.o_web_client,
+.o_action_manager,
+.o_view_controller,
+.o_form_view,
+.o_list_view,
+.o_kanban_view,
+.o_searchview,
+.transitops-dashboard {
+    font-family: var(--to-font) !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   4. DASHBOARD LAYOUT
+   ============================================================ */
+.transitops-dashboard {
+    background: var(--to-bg);
+    min-height: 100vh;
+    padding: 28px 32px 40px;
+    font-family: var(--to-font);
+}
+
+/* ============================================================
+   5. DASHBOARD HEADER — Clean Top Bar Style
+   ============================================================ */
+.transitops-dashboard-header {
+    background: var(--to-surface);
+    border: 1px solid var(--to-border);
+    border-radius: var(--to-radius-lg);
+    padding: 20px 28px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--to-shadow-sm);
+}
+
+.to-header-left h1 {
+    font-family: var(--to-font) !important;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--to-gray-950);
+    margin: 0 0 2px;
+    letter-spacing: -0.2px;
+}
+
+.to-header-left p {
+    font-family: var(--to-font) !important;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--to-gray-500);
+    margin: 0;
+}
+
+/* Status pill in header */
+.to-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--to-success-bg);
+    border: 1px solid var(--to-success-border);
+    border-radius: var(--to-radius-pill);
+    padding: 4px 10px;
+    font-family: var(--to-font) !important;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--to-success-text);
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.to-status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--to-success);
+    animation: to-pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes to-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.35; }
+}
+
+.to-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Header action buttons */
+.to-btn-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--to-font) !important;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: var(--to-radius-sm);
+    border: 1px solid var(--to-border);
+    background: var(--to-surface);
+    color: var(--to-gray-700);
+    cursor: pointer;
+    transition: var(--to-transition);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.to-btn-header:hover {
+    background: var(--to-gray-50);
+    border-color: var(--to-gray-300);
+    color: var(--to-gray-950);
+    box-shadow: var(--to-shadow-xs);
+}
+
+.to-btn-primary {
+    background: var(--to-brand);
+    border-color: var(--to-brand);
+    color: #fff !important;
+}
+
+.to-btn-primary:hover {
+    background: var(--to-brand-dark);
+    border-color: var(--to-brand-dark);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* ============================================================
+   6. SECTION HEADERS
+   ============================================================ */
+.to-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    margin-top: 8px;
+}
+
+.to-section-title {
+    font-family: var(--to-font) !important;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--to-gray-400);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* ============================================================
+   7. METRIC CARDS — Professional Enterprise Style
+   ============================================================ */
+.transitops-kpi-card {
+    background: var(--to-surface);
+    border: 1px solid var(--to-border);
+    border-radius: var(--to-radius-lg);
+    padding: 20px 22px 18px;
+    box-shadow: var(--to-shadow-sm);
+    transition: var(--to-transition);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 130px;
+}
+
+.transitops-kpi-card:hover {
+    border-color: var(--to-gray-300);
+    box-shadow: var(--to-shadow-hover);
+    transform: translateY(-2px);
+}
+
+/* Subtle left accent bar on hover */
+.transitops-kpi-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 16px; bottom: 16px;
+    width: 3px;
+    border-radius: 0 2px 2px 0;
+    opacity: 0;
+    transition: var(--to-transition);
+}
+
+.transitops-kpi-card:hover::before {
+    opacity: 1;
+}
+
+/* Card Top Row: Icon + Label */
+.to-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+/* Icon circle */
+.kpi-icon-wrap {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--to-radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+}
+
+/* KPI Label */
+.kpi-title {
+    font-family: var(--to-font) !important;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--to-gray-500);
+    line-height: 1;
+    margin-top: 1px;
+}
+
+/* KPI Number */
+.kpi-value {
+    font-family: var(--to-font) !important;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--to-gray-950);
+    line-height: 1;
+    letter-spacing: -0.5px;
+}
+
+/* Trend badge */
+.kpi-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-family: var(--to-font) !important;
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: var(--to-radius-pill);
+    letter-spacing: 0.2px;
+}
+
+.kpi-trend.up {
+    background: var(--to-success-bg);
+    color: var(--to-success-text);
+    border: 1px solid var(--to-success-border);
+}
+
+.kpi-trend.down {
+    background: var(--to-danger-bg);
+    color: var(--to-danger-text);
+    border: 1px solid var(--to-danger-border);
+}
+
+.kpi-trend.neutral {
+    background: var(--to-gray-100);
+    color: var(--to-gray-500);
+    border: 1px solid var(--to-gray-200);
+}
+
+.kpi-trend.warn {
+    background: var(--to-warning-bg);
+    color: var(--to-warning-text);
+    border: 1px solid var(--to-warning-border);
+}
+
+/* Action link */
+.kpi-action-link {
+    font-family: var(--to-font) !important;
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--to-gray-400);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: var(--to-transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.kpi-action-link:hover {
+    color: var(--to-brand);
+}
+
+/* ============================================================
+   8. CARD COLOR VARIANTS — Icon & Accent
+   ============================================================ */
+
+/* Blue */
+.kpi-primary .kpi-icon-wrap   { background: var(--to-brand-light); color: var(--to-brand); }
+.kpi-primary::before           { background: var(--to-brand); }
+.kpi-primary:hover             { border-color: var(--to-brand-mid); }
+
+/* Green */
+.kpi-success .kpi-icon-wrap   { background: var(--to-success-bg); color: var(--to-success); }
+.kpi-success::before           { background: var(--to-success); }
+.kpi-success:hover             { border-color: var(--to-success-border); }
+
+/* Orange */
+.kpi-warning .kpi-icon-wrap   { background: var(--to-warning-bg); color: var(--to-warning); }
+.kpi-warning::before           { background: var(--to-warning); }
+.kpi-warning:hover             { border-color: var(--to-warning-border); }
+
+/* Purple */
+.kpi-info .kpi-icon-wrap      { background: var(--to-purple-bg); color: var(--to-purple); }
+.kpi-info::before              { background: var(--to-purple); }
+.kpi-info:hover                { border-color: var(--to-purple-border); }
+
+/* Teal */
+.kpi-dark .kpi-icon-wrap      { background: var(--to-teal-bg); color: var(--to-teal); }
+.kpi-dark::before              { background: var(--to-teal); }
+.kpi-dark:hover                { border-color: var(--to-teal-border); }
+
+/* Amber */
+.kpi-orange .kpi-icon-wrap    { background: var(--to-amber-bg); color: var(--to-amber); }
+.kpi-orange::before            { background: var(--to-amber); }
+.kpi-orange:hover              { border-color: var(--to-amber-border); }
+
+/* Slate */
+.kpi-secondary .kpi-icon-wrap { background: var(--to-slate-bg); color: var(--to-slate); }
+.kpi-secondary::before         { background: var(--to-slate); }
+.kpi-secondary:hover           { border-color: var(--to-slate-border); }
+
+/* Red */
+.kpi-teal .kpi-icon-wrap      { background: var(--to-danger-bg); color: var(--to-danger); }
+.kpi-teal::before              { background: var(--to-danger); }
+.kpi-teal:hover                { border-color: var(--to-danger-border); }
+
+/* Pink */
+.kpi-red .kpi-icon-wrap       { background: #FFF0F3; color: #E11D48; }
+.kpi-red::before               { background: #E11D48; }
+.kpi-red:hover                 { border-color: #FECDD3; }
+
+/* Emerald */
+.kpi-green .kpi-icon-wrap     { background: var(--to-success-bg); color: var(--to-success); }
+.kpi-green::before             { background: var(--to-success); }
+.kpi-green:hover               { border-color: var(--to-success-border); }
+
+/* Violet */
+.kpi-purple .kpi-icon-wrap    { background: var(--to-purple-bg); color: var(--to-purple); }
+.kpi-purple::before            { background: var(--to-purple); }
+.kpi-purple:hover              { border-color: var(--to-purple-border); }
+
+/* ============================================================
+   9. QUICK ACTIONS PANEL
+   ============================================================ */
+.transitops-quick-links {
+    background: var(--to-surface);
+    border: 1px solid var(--to-border);
+    border-radius: var(--to-radius-lg);
+    padding: 18px 22px;
+    box-shadow: var(--to-shadow-sm);
+}
+
+.transitops-quick-links h5 {
+    font-family: var(--to-font) !important;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--to-gray-400);
+    margin: 0 0 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--to-border);
+}
+
+/* Quick action buttons */
+.transitops-quick-links .btn {
+    font-family: var(--to-font) !important;
+    font-size: 0.775rem;
+    font-weight: 600;
+    letter-spacing: 0.1px;
+    padding: 8px 16px;
+    border-radius: var(--to-radius-sm);
+    transition: var(--to-transition);
+    border: 1px solid var(--to-border);
+    background: var(--to-surface);
+    color: var(--to-gray-700);
+}
+
+.transitops-quick-links .btn:hover {
+    background: var(--to-gray-50);
+    border-color: var(--to-gray-300);
+    color: var(--to-gray-950);
+    transform: translateY(-1px);
+    box-shadow: var(--to-shadow-sm);
+}
+
+.btn-outline-primary {
+    border-color: var(--to-brand-mid) !important;
+    color: var(--to-brand) !important;
+}
+.btn-outline-primary:hover {
+    background: var(--to-brand-light) !important;
+    border-color: var(--to-brand) !important;
+}
+
+.btn-outline-success {
+    border-color: var(--to-success-border) !important;
+    color: var(--to-success-text) !important;
+}
+.btn-outline-success:hover {
+    background: var(--to-success-bg) !important;
+}
+
+.btn-outline-warning {
+    border-color: var(--to-warning-border) !important;
+    color: var(--to-warning-text) !important;
+}
+.btn-outline-warning:hover {
+    background: var(--to-warning-bg) !important;
+}
+
+.btn-outline-danger {
+    border-color: var(--to-danger-border) !important;
+    color: var(--to-danger-text) !important;
+}
+.btn-outline-danger:hover {
+    background: var(--to-danger-bg) !important;
+}
+
+.btn-outline-secondary {
+    border-color: var(--to-slate-border) !important;
+    color: var(--to-slate) !important;
+}
+.btn-outline-secondary:hover {
+    background: var(--to-slate-bg) !important;
+}
+
+/* ============================================================
+   10. ODOO FORM VIEWS — Professional Refinements
+   ============================================================ */
+
+/* Stat buttons */
+.oe_button_box .oe_stat_button {
+    font-family: var(--to-font) !important;
+    font-size: 0.78rem !important;
+    border-radius: var(--to-radius-sm) !important;
+    transition: var(--to-transition);
+}
+
+.oe_button_box .oe_stat_button:hover {
+    background: var(--to-gray-50) !important;
+    box-shadow: var(--to-shadow-sm) !important;
+    transform: translateY(-1px);
+}
+
+/* Status bar */
+.o_statusbar_status button {
+    font-family: var(--to-font) !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    border-radius: var(--to-radius-pill) !important;
+    transition: var(--to-transition) !important;
+    letter-spacing: 0.2px;
+}
+
+/* Form labels */
+.o_form_label,
+.o_inner_group .o_td_label label,
+.o_group .o_td_label label {
+    font-family: var(--to-font) !important;
+    font-size: 0.78rem !important;
+    font-weight: 600 !important;
+    color: var(--to-gray-600) !important;
+    letter-spacing: 0.1px;
+}
+
+/* Notebook tabs */
+.o_notebook .nav-link {
+    font-family: var(--to-font) !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.1px;
+    color: var(--to-gray-500) !important;
+    border-radius: var(--to-radius-sm) !important;
+    padding: 7px 14px !important;
+    transition: var(--to-transition-fast) !important;
+}
+
+.o_notebook .nav-link.active {
+    color: var(--to-brand) !important;
+    background: var(--to-brand-light) !important;
+    font-weight: 700 !important;
+}
+
+/* Form input fields */
+.o_field_widget input,
+.o_field_widget textarea,
+.o_field_widget select {
+    font-family: var(--to-font) !important;
+    font-size: 0.85rem !important;
+    border-radius: var(--to-radius-sm) !important;
+    border-color: var(--to-border) !important;
+    transition: var(--to-transition);
+}
+
+.o_field_widget input:focus,
+.o_field_widget textarea:focus {
+    border-color: var(--to-brand) !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08) !important;
+    outline: none !important;
+}
+
+/* Workflow buttons */
+.o_statusbar_buttons .btn,
+.o_form_buttons_view .btn {
+    font-family: var(--to-font) !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    border-radius: var(--to-radius-sm) !important;
+    padding: 8px 18px !important;
+    letter-spacing: 0.1px;
+    transition: var(--to-transition);
+}
+
+.o_statusbar_buttons .btn-primary,
+.o_form_buttons_view .btn-primary {
+    background: var(--to-brand) !important;
+    border-color: var(--to-brand) !important;
+    box-shadow: 0 1px 2px rgba(37,99,235,0.2) !important;
+}
+
+.o_statusbar_buttons .btn-primary:hover {
+    background: var(--to-brand-dark) !important;
+    border-color: var(--to-brand-dark) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37,99,235,0.25) !important;
+}
+
+/* ============================================================
+   11. LIST VIEW — Clean Data Table
+   ============================================================ */
+.o_list_table {
+    font-family: var(--to-font) !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+}
+
+.o_list_table thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: var(--to-surface);
+}
+
+.o_list_table thead th {
+    font-family: var(--to-font) !important;
+    font-size: 0.68rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+    color: var(--to-gray-500) !important;
+    border-bottom: 2px solid var(--to-border) !important;
+    border-top: none !important;
+    padding: 10px 12px !important;
+    background: var(--to-surface) !important;
+    white-space: nowrap;
+}
+
+.o_list_table tbody tr {
+    transition: background-color 0.12s ease;
+    border-bottom: 1px solid var(--to-gray-100) !important;
+}
+
+.o_list_table tbody tr:hover {
+    background-color: var(--to-gray-50) !important;
+}
+
+.o_list_table td {
+    font-family: var(--to-font) !important;
+    font-size: 0.84rem !important;
+    color: var(--to-gray-700) !important;
+    padding: 11px 12px !important;
+    vertical-align: middle !important;
+    border-top: none !important;
+}
+
+/* Primary column (first data column) */
+.o_list_table td:first-child {
+    font-weight: 600 !important;
+    color: var(--to-gray-950) !important;
+}
+
+/* Footer rows */
+.o_list_table tfoot td {
+    font-family: var(--to-font) !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
+    color: var(--to-gray-700) !important;
+    background: var(--to-gray-50) !important;
+    border-top: 2px solid var(--to-border) !important;
+}
+
+/* ============================================================
+   12. STATUS BADGES — Professional Pill Style
+   ============================================================ */
+.badge,
+.o_tag {
+    font-family: var(--to-font) !important;
+    font-size: 0.7rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.2px;
+    border-radius: var(--to-radius-pill) !important;
+    padding: 3px 9px !important;
+}
+
+/* Available / Success */
+.badge.text-bg-success,
+.o_badge_cell .badge[style*="success"] {
+    background: var(--to-success-bg) !important;
+    color: var(--to-success-text) !important;
+    border: 1px solid var(--to-success-border) !important;
+}
+
+/* Warning */
+.badge.text-bg-warning {
+    background: var(--to-warning-bg) !important;
+    color: var(--to-warning-text) !important;
+    border: 1px solid var(--to-warning-border) !important;
+}
+
+/* Danger */
+.badge.text-bg-danger {
+    background: var(--to-danger-bg) !important;
+    color: var(--to-danger-text) !important;
+    border: 1px solid var(--to-danger-border) !important;
+}
+
+/* Info / Primary */
+.badge.text-bg-info,
+.badge.text-bg-primary {
+    background: var(--to-brand-light) !important;
+    color: var(--to-brand) !important;
+    border: 1px solid var(--to-brand-mid) !important;
+}
+
+/* Secondary */
+.badge.text-bg-secondary {
+    background: var(--to-gray-100) !important;
+    color: var(--to-gray-600) !important;
+    border: 1px solid var(--to-gray-200) !important;
+}
+
+/* ============================================================
+   13. KANBAN CARDS — Clean Light Style
+   ============================================================ */
+.o_kanban_record {
+    font-family: var(--to-font) !important;
+    background: var(--to-surface) !important;
+    border: 1px solid var(--to-border) !important;
+    border-radius: var(--to-radius-lg) !important;
+    box-shadow: var(--to-shadow-sm) !important;
+    transition: var(--to-transition);
+    overflow: hidden;
+}
+
+.o_kanban_record:hover {
+    border-color: var(--to-gray-300) !important;
+    box-shadow: var(--to-shadow-md) !important;
+    transform: translateY(-2px);
+}
+
+.o_kanban_record .o_kanban_record_title {
+    font-family: var(--to-font) !important;
+    font-size: 0.88rem !important;
+    font-weight: 600 !important;
+    color: var(--to-gray-950) !important;
+}
+
+.o_kanban_record ul {
+    font-size: 0.8rem !important;
+    color: var(--to-gray-600) !important;
+}
+
+/* Kanban column header */
+.o_kanban_group_title_column {
+    font-family: var(--to-font) !important;
+    font-size: 0.7rem !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--to-gray-500) !important;
+}
+
+/* ============================================================
+   14. SEARCH BAR
+   ============================================================ */
+.o_searchview {
+    font-family: var(--to-font) !important;
+}
+
+.o_searchview .o_searchview_input {
+    font-family: var(--to-font) !important;
+    font-size: 0.84rem !important;
+    border-radius: var(--to-radius-sm) !important;
+}
+
+.o_searchview .o_facet_values {
+    font-family: var(--to-font) !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    border-radius: var(--to-radius-pill) !important;
+    background: var(--to-brand-light) !important;
+    color: var(--to-brand) !important;
+    border-color: var(--to-brand-mid) !important;
+}
+
+/* ============================================================
+   15. BREADCRUMB
+   ============================================================ */
+.o_breadcrumb .o_breadcrumb_item,
+.o_breadcrumb a {
+    font-family: var(--to-font) !important;
+    font-size: 0.82rem !important;
+    font-weight: 500 !important;
+    color: var(--to-gray-500) !important;
+}
+
+.o_breadcrumb .o_breadcrumb_item.active {
+    font-weight: 700 !important;
+    color: var(--to-gray-950) !important;
+}
+
+/* ============================================================
+   16. DROPDOWN MENUS
+   ============================================================ */
+.dropdown-menu {
+    font-family: var(--to-font) !important;
+    border: 1px solid var(--to-border) !important;
+    border-radius: var(--to-radius-md) !important;
+    box-shadow: var(--to-shadow-lg) !important;
+    padding: 6px !important;
+    background: var(--to-surface) !important;
+}
+
+.dropdown-item {
+    font-family: var(--to-font) !important;
+    font-size: 0.83rem !important;
+    font-weight: 500 !important;
+    border-radius: var(--to-radius-sm) !important;
+    padding: 7px 12px !important;
+    color: var(--to-gray-700) !important;
+    transition: var(--to-transition);
+}
+
+.dropdown-item:hover {
+    background: var(--to-gray-50) !important;
+    color: var(--to-gray-950) !important;
+}
+
+/* ============================================================
+   17. MODAL / WIZARD
+   ============================================================ */
+.modal-content {
+    font-family: var(--to-font) !important;
+    border: 1px solid var(--to-border) !important;
+    border-radius: var(--to-radius-xl) !important;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.12), 0 8px 16px rgba(0,0,0,0.06) !important;
+    overflow: hidden;
+}
+
+.modal-header {
+    font-family: var(--to-font) !important;
+    background: var(--to-surface) !important;
+    border-bottom: 1px solid var(--to-border) !important;
+    padding: 18px 24px !important;
+}
+
+.modal-title {
+    font-family: var(--to-font) !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    color: var(--to-gray-950) !important;
+    letter-spacing: -0.1px;
+}
+
+.modal-body {
+    font-family: var(--to-font) !important;
+    padding: 20px 24px !important;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--to-border) !important;
+    padding: 14px 24px !important;
+    background: var(--to-gray-50) !important;
+}
+
+/* ============================================================
+   18. ALERTS — Professional Style
+   ============================================================ */
+.alert {
+    font-family: var(--to-font) !important;
+    font-size: 0.84rem !important;
+    font-weight: 500 !important;
+    border-radius: var(--to-radius-md) !important;
+    border: 1px solid !important;
+}
+
+.alert-warning {
+    background: var(--to-warning-bg) !important;
+    border-color: var(--to-warning-border) !important;
+    color: var(--to-warning-text) !important;
+}
+
+.alert-danger {
+    background: var(--to-danger-bg) !important;
+    border-color: var(--to-danger-border) !important;
+    color: var(--to-danger-text) !important;
+}
+
+.alert-success {
+    background: var(--to-success-bg) !important;
+    border-color: var(--to-success-border) !important;
+    color: var(--to-success-text) !important;
+}
+
+/* ============================================================
+   19. PROGRESS BARS (Fleet Health panel)
+   ============================================================ */
+.to-progress-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.to-progress-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.to-progress-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.to-progress-name {
+    font-family: var(--to-font) !important;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--to-gray-700);
+}
+
+.to-progress-val {
+    font-family: var(--to-font) !important;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--to-gray-950);
+}
+
+.to-progress-track {
+    height: 5px;
+    background: var(--to-gray-100);
+    border-radius: var(--to-radius-pill);
+    overflow: hidden;
+}
+
+.to-progress-fill {
+    height: 100%;
+    border-radius: var(--to-radius-pill);
+    transition: width 1s var(--to-ease);
+}
+
+/* ============================================================
+   20. RESPONSIVE
+   ============================================================ */
+@media (max-width: 1200px) {
+    .transitops-dashboard { padding: 20px 24px; }
+}
+
+@media (max-width: 992px) {
+    .transitops-dashboard { padding: 16px 18px; }
+    .transitops-dashboard-header { flex-wrap: wrap; gap: 12px; }
+}
+
+@media (max-width: 768px) {
+    .transitops-dashboard { padding: 12px; }
+    .kpi-value { font-size: 1.6rem; }
+    .transitops-kpi-card { min-height: 110px; padding: 16px 18px 14px; }
+    .transitops-quick-links .btn { font-size: 0.72rem; padding: 6px 12px; }
+}
+
+/* ============================================================
+   21. PRINT
+   ============================================================ */
+@media print {
+    .transitops-dashboard {
+        background: #fff !important;
+        padding: 0 !important;
+    }
+
+    .transitops-kpi-card {
+        box-shadow: none !important;
+        border: 1px solid #e2e8f0 !important;
+        break-inside: avoid;
+    }
+
+    .transitops-dashboard-header {
+        box-shadow: none !important;
+        border: 1px solid #e2e8f0 !important;
+    }
+}
+
+/* ============================================================
+   22. UTILITY
+   ============================================================ */
+.to-divider {
+    height: 1px;
+    background: var(--to-border);
+    border: none;
+    margin: 0;
+}
+
+.to-text-brand    { color: var(--to-brand) !important; }
+.to-text-success  { color: var(--to-success) !important; }
+.to-text-warning  { color: var(--to-warning) !important; }
+.to-text-danger   { color: var(--to-danger) !important; }
+.to-text-muted    { color: var(--to-gray-500) !important; }
+.to-text-heading  { color: var(--to-gray-950) !important; }
+
+.to-fw-500 { font-weight: 500 !important; }
+.to-fw-600 { font-weight: 600 !important; }
+.to-fw-700 { font-weight: 700 !important; }

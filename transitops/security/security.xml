@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- ============================================================
+             CATEGORIES
+        ============================================================ -->
+        <record id="module_category_transitops" model="ir.module.category">
+            <field name="name">TransitOps</field>
+            <field name="description">TransitOps Smart Transport Operations Platform</field>
+            <field name="sequence">100</field>
+        </record>
+
+        <!-- ============================================================
+             GROUPS / ROLES
+        ============================================================ -->
+
+        <!-- Base User Group (internal, read-only access to the app) -->
+        <record id="group_transitops_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="module_category_transitops"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">Basic read access to TransitOps records.</field>
+        </record>
+
+        <!-- Dispatcher -->
+        <record id="group_transitops_dispatcher" model="res.groups">
+            <field name="name">Dispatcher</field>
+            <field name="category_id" ref="module_category_transitops"/>
+            <field name="implied_ids" eval="[(4, ref('group_transitops_user'))]"/>
+            <field name="comment">
+                Can create and manage trips. Can read vehicles and drivers.
+            </field>
+        </record>
+
+        <!-- Safety Officer -->
+        <record id="group_transitops_safety_officer" model="res.groups">
+            <field name="name">Safety Officer</field>
+            <field name="category_id" ref="module_category_transitops"/>
+            <field name="implied_ids" eval="[(4, ref('group_transitops_user'))]"/>
+            <field name="comment">
+                Can read driver records and maintenance records.
+                Cannot modify financial data.
+            </field>
+        </record>
+
+        <!-- Financial Analyst -->
+        <record id="group_transitops_financial_analyst" model="res.groups">
+            <field name="name">Financial Analyst</field>
+            <field name="category_id" ref="module_category_transitops"/>
+            <field name="implied_ids" eval="[(4, ref('group_transitops_user'))]"/>
+            <field name="comment">
+                Full access to expenses, fuel logs and reports.
+                Read access to vehicles, drivers and trips.
+            </field>
+        </record>
+
+        <!-- Fleet Manager (superuser of this module) -->
+        <record id="group_transitops_fleet_manager" model="res.groups">
+            <field name="name">Fleet Manager</field>
+            <field name="category_id" ref="module_category_transitops"/>
+            <field name="implied_ids" eval="[
+                (4, ref('group_transitops_dispatcher')),
+                (4, ref('group_transitops_safety_officer')),
+                (4, ref('group_transitops_financial_analyst')),
+            ]"/>
+            <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+            <field name="comment">
+                Full access to all TransitOps records and configuration.
+            </field>
+        </record>
+
+        <!-- ============================================================
+             RECORD RULES
+        ============================================================ -->
+
+        <!-- Dispatchers can only see their own dispatched/draft trips -->
+        <record id="rule_transitops_trip_dispatcher" model="ir.rule">
+            <field name="name">Dispatcher: Own Trips Only</field>
+            <field name="model_id" ref="model_transit_trip"/>
+            <field name="domain_force">[('create_uid', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_transitops_dispatcher'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Fleet Manager sees ALL trips -->
+        <record id="rule_transitops_trip_manager" model="ir.rule">
+            <field name="name">Fleet Manager: All Trips</field>
+            <field name="model_id" ref="model_transit_trip"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_transitops_fleet_manager'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- Financial Analyst: read-only on vehicles/drivers/trips -->
+        <record id="rule_transitops_vehicle_financial" model="ir.rule">
+            <field name="name">Financial Analyst: Read All Vehicles</field>
+            <field name="model_id" ref="model_transit_vehicle"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_transitops_financial_analyst'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Safety Officer: read-only on drivers -->
+        <record id="rule_transitops_driver_safety" model="ir.rule">
+            <field name="name">Safety Officer: Read All Drivers</field>
+            <field name="model_id" ref="model_transit_driver"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_transitops_safety_officer'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Safety Officer: read-only on maintenance -->
+        <record id="rule_transitops_maintenance_safety" model="ir.rule">
+            <field name="name">Safety Officer: Read All Maintenance</field>
+            <field name="model_id" ref="model_transit_maintenance"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[(4, ref('group_transitops_safety_officer'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

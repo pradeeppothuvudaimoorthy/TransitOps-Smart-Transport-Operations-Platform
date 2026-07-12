@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================
+             ACTION WINDOW
+        ============================================================ -->
+        <record id="action_transit_fuel_log" model="ir.actions.act_window">
+            <field name="name">Fuel Logs</field>
+            <field name="res_model">transit.fuel.log</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No fuel logs recorded
+                </p>
+                <p>
+                    Fuel logs are auto-created on trip completion. You can also add them manually.
+                </p>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             LIST VIEW
+        ============================================================ -->
+        <record id="view_transit_fuel_log_list" model="ir.ui.view">
+            <field name="name">transit.fuel.log.list</field>
+            <field name="model">transit.fuel.log</field>
+            <field name="arch" type="xml">
+                <list string="Fuel Logs">
+                    <field name="reference"/>
+                    <field name="vehicle_id"/>
+                    <field name="trip_id"/>
+                    <field name="date"/>
+                    <field name="fuel_liters" sum="Total Liters"/>
+                    <field name="fuel_cost" sum="Total Cost"/>
+                    <field name="distance" sum="Total Distance"/>
+                    <field name="fuel_efficiency" avg="Avg Efficiency"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             FORM VIEW
+        ============================================================ -->
+        <record id="view_transit_fuel_log_form" model="ir.ui.view">
+            <field name="name">transit.fuel.log.form</field>
+            <field name="model">transit.fuel.log</field>
+            <field name="arch" type="xml">
+                <form string="Fuel Log">
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="reference" readonly="1"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group string="Vehicle &amp; Trip">
+                                <field name="vehicle_id"/>
+                                <field name="trip_id"
+                                       domain="[('vehicle_id', '=', vehicle_id), ('status', 'in', ['dispatched', 'completed'])]"/>
+                                <field name="date"/>
+                            </group>
+                            <group string="Fuel Data">
+                                <field name="fuel_liters"/>
+                                <field name="fuel_cost"/>
+                                <field name="distance"/>
+                                <field name="fuel_efficiency" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group string="Linked Expense" col="2">
+                            <field name="expense_id" readonly="1" invisible="not expense_id"/>
+                        </group>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- ============================================================
+             SEARCH VIEW
+        ============================================================ -->
+        <record id="view_transit_fuel_log_search" model="ir.ui.view">
+            <field name="name">transit.fuel.log.search</field>
+            <field name="model">transit.fuel.log</field>
+            <field name="arch" type="xml">
+                <search string="Search Fuel Logs">
+                    <field name="reference"/>
+                    <field name="vehicle_id"/>
+                    <field name="trip_id"/>
+
+                    <filter string="This Month" name="filter_month"
+                            domain="[('date', '&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Vehicle" name="group_vehicle" context="{'group_by': 'vehicle_id'}"/>
+                        <filter string="Trip" name="group_trip" context="{'group_by': 'trip_id'}"/>
+                        <filter string="Month" name="group_month" context="{'group_by': 'date:month'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- ============================================================
+             TRIP CANCEL WIZARD ACTION
+        ============================================================ -->
+        <record id="action_trip_cancel_wizard" model="ir.actions.act_window">
+            <field name="name">Cancel Trip</field>
+            <field name="res_model">transit.trip.cancel.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="binding_model_id" ref="model_transit_trip"/>
+            <field name="context">{'active_id': active_id}</field>
+        </record>
+
+        <!-- ============================================================
+             WIZARD FORM VIEW
+        ============================================================ -->
+        <record id="view_trip_cancel_wizard_form" model="ir.ui.view">
+            <field name="name">transit.trip.cancel.wizard.form</field>
+            <field name="model">transit.trip.cancel.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Cancel Trip">
+                    <div class="modal-header">
+                        <h4 class="text-danger">❌ Cancel Trip Confirmation</h4>
+                    </div>
+                    <group>
+                        <field name="trip_number" readonly="1"/>
+                        <field name="current_status" readonly="1"/>
+                    </group>
+                    <group>
+                        <field name="cancellation_reason"
+                               placeholder="Please provide a detailed reason for cancelling this trip..."
+                               required="1"/>
+                    </group>
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Warning:</strong> Cancelling a dispatched trip will restore
+                        the vehicle and driver to Available status.
+                        This action cannot be undone.
+                    </div>
+                    <footer>
+                        <button name="action_confirm_cancel"
+                                string="Confirm Cancellation"
+                                type="object"
+                                class="btn-danger"/>
+                        <button string="Go Back"
+                                class="btn-secondary"
+                                special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>
